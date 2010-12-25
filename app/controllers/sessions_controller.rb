@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
 
   def new
     if TwitterAuth.oauth?
-      oauth_callback = request.protocol + request.host_with_port + '/oauth_callback'
+      oauth_callback = request.protocol + request.host_with_port + request.script_name + '/oauth_callback'
       @request_token = TwitterAuth.consumer.get_request_token({:oauth_callback=>oauth_callback})
       session[:request_token] = @request_token.token
       session[:request_token_secret] = @request_token.secret
@@ -63,6 +63,6 @@ class SessionsController < ApplicationController
   
   def destroy
     logout_keeping_session!
-    redirect_back_or_default('/')
+    redirect_back_or_default(request.script_name)
   end
 end

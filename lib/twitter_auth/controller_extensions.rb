@@ -9,12 +9,12 @@ module TwitterAuth
 
     protected
 
-    def authentication_failed(message, destination='/')
+    def authentication_failed(message, destination=request.script_name)
       flash[:error] = message
       redirect_to destination
     end
 
-    def authentication_succeeded(message = 'You have logged in successfully.', destination = '/')
+    def authentication_succeeded(message = 'You have logged in successfully.', destination = request.script_name)
       flash[:notice] = message
       redirect_back_or_default destination
     end
